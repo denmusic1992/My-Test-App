@@ -1,0 +1,3 @@
+rootProject.name='BeTrendy'
+include ':app'
+include ':domain_layer'

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">BeTrendyApp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_title">You are not signed in! Please sign in or create new account.</string>
+    <string name="enter_login">Enter your login:</string>
+    <string name="enter_password">Enter your password:</string>
+    <string name="sign_in">sign in</string>
+    <string name="sign_up">sign up</string>
+    <string name="credentials_title">Please enter your credentials here:</string>
+    <string name="username">Username:</string>
+    <string name="enter_your_username">Enter your username:</string>
+    <string name="confirm_password">Confirm password:</string>
+    <string name="enter_your_first_name">Enter your First name:</string>
+    <string name="enter_your_last_name">Enter your Last name:</string>
+    <string name="enter_your_middle_name">Enter your Middle name (optional):</string>
+    <string name="register_me">Register ME!</string>
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="events_title">There are your events:</string>
+</resources>
