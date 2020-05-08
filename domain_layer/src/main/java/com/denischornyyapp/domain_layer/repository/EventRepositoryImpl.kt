@@ -14,6 +14,8 @@ All rights received.
 class EventRepositoryImpl(private val eventRepository: EventRepository) {
     suspend fun addEvent(event: Event) = eventRepository.add(event)
 
+    suspend fun addAllEvents(events: List<Event>) = eventRepository.addAll(events)
+
     suspend fun getEvent(id: Long) = eventRepository.get(id)
 
     suspend fun getAllEvents() = eventRepository.getAll()

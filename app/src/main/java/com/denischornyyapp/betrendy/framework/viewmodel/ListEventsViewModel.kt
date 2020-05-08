@@ -28,12 +28,15 @@ import kotlinx.coroutines.launch
 Created by Denis Chornyy on 07,Май,2020
 All rights received.
  */
-class ListEventsViewModel(application: Application): AndroidViewModel(application) {
+class ListEventsViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private val credentialsRepo: CredentialsRepositoryImpl = CredentialsRepositoryImpl(PreferencesRepositoryImpl(application))
-    private val userRepo: UserRepositoryImpl = UserRepositoryImpl(UserRoomRepositoryImpl(application))
-    private val eventRepo: EventRepositoryImpl = EventRepositoryImpl(EventRoomRepositoryImpl(application))
+    private val credentialsRepo: CredentialsRepositoryImpl =
+        CredentialsRepositoryImpl(PreferencesRepositoryImpl(application))
+    private val userRepo: UserRepositoryImpl =
+        UserRepositoryImpl(UserRoomRepositoryImpl(application))
+    private val eventRepo: EventRepositoryImpl =
+        EventRepositoryImpl(EventRoomRepositoryImpl(application))
     private val credentialUseCases: CredentialUseCases
     private val userUseCases: UserUseCases
     private val eventUseCases: EventUseCases
@@ -62,6 +65,7 @@ class ListEventsViewModel(application: Application): AndroidViewModel(applicatio
 
         eventUseCases = EventUseCases(
             AddEvent(eventRepo),
+            AddAllEvents(eventRepo),
             GetEvent(eventRepo),
             GetAllEvents(eventRepo),
             GetEventsForAuthor(eventRepo),
@@ -81,6 +85,17 @@ class ListEventsViewModel(application: Application): AndroidViewModel(applicatio
                     events.postValue(eventUseCases.getEventsForAuthor(user.userID))
                 }
             }
+        }
+    }
+
+
+    /**
+     * Поставить лайк
+     */
+    fun likePost(event: Event) {
+        coroutineScope.launch {
+            eventUseCases.updateEvent(event)
+            events.postValue(eventUseCases.getEventsForAuthor(event.authorID))
         }
     }
 

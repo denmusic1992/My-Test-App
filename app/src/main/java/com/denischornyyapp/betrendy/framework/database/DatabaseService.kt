@@ -13,7 +13,7 @@ import com.denischornyyapp.betrendy.framework.database.entities.UserEntity
 Created by Denis Chornyy on 29,Апрель,2020
 All rights received.
  */
-@Database(entities = [EventEntity::class, UserEntity::class], version = 2)
+@Database(entities = [EventEntity::class, UserEntity::class], version = 3)
 abstract class DatabaseService : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun eventDao(): EventDao

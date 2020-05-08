@@ -8,6 +8,7 @@ All rights received.
  */
 data class EventUseCases(
     val addEvent: AddEvent,
+    val addAllEvents: AddAllEvents,
     val getEvent: GetEvent,
     val getAllEvents: GetAllEvents,
     val getEventsForAuthor: GetEventsForAuthor,

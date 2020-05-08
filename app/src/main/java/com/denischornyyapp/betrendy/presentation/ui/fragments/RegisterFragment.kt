@@ -69,7 +69,7 @@ class RegisterFragment : Fragment() {
                 username = username,
                 passwordHash = password.hashCode()
             )
-            viewModel.registerNewUser(newUser)
+            viewModel.registerUserWithTestEvents(newUser)
         }
     }
 

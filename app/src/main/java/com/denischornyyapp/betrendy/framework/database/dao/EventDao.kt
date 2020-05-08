@@ -1,6 +1,7 @@
 package com.denischornyyapp.betrendy.framework.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import com.denischornyyapp.betrendy.framework.database.entities.EventEntity
 
@@ -11,6 +12,10 @@ All rights received.
 
 @Dao
 interface EventDao : BaseDao<EventEntity> {
+
+    @Insert
+    suspend fun insertAll(events: List<EventEntity>)
+
     @Query("select * from event where id=:id")
     suspend fun getEvent(id: Long): EventEntity?
 

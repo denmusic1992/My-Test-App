@@ -31,7 +31,9 @@ data class EventEntity(
     val likesCount: Int,
     @ColumnInfo(name = "author_id")
     val authorID: String,
-    val comments: List<String> = listOf()
+    val comments: List<String> = listOf(),
+    @ColumnInfo(name = "voted")
+    val voted: Boolean = false
 ) {
     fun toEvent() = Event(
         id,
@@ -43,7 +45,8 @@ data class EventEntity(
         eventCoordinates,
         likesCount,
         UUID.fromString(authorID),
-        comments
+        comments,
+        voted
     )
 
     companion object {
@@ -57,7 +60,8 @@ data class EventEntity(
             event.eventCoordinates,
             event.likesCount,
             event.authorID.toString(),
-            event.comments
+            event.comments,
+            event.voted
         )
 
         fun getTestEvent(authorID: String): EventEntity {

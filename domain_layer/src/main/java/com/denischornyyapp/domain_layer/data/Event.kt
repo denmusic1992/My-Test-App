@@ -18,17 +18,29 @@ data class Event(
     val publishDate: Long = System.currentTimeMillis(),
     val editDate: Long = publishDate,
     val eventCoordinates: Pair<Double, Double> = Pair(0.0, 0.0),
-    val likesCount: Int,
+    var likesCount: Int,
     val authorID: UUID,
-    val comments: List<String> = listOf()
+    val comments: List<String> = listOf(),
+    var voted: Boolean = false
 ) {
+
+    fun voteUp() {
+        likesCount++
+        voted = true
+    }
+
+    fun voteDown() {
+        likesCount--
+        voted = false
+    }
+
     companion object {
         fun createTestEvent(authorID: UUID) = Event(
             0,
             "Новое событие",
             "Тут очуметь что происходит",
             listOf(),
-            likesCount = (0..999999).random(),
+            likesCount = (0..9999).random(),
             authorID = authorID
         )
     }

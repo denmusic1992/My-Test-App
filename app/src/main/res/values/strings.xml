@@ -17,5 +17,5 @@
     <string name="enter_your_middle_name">Enter your Middle name (optional):</string>
     <string name="register_me">Register ME!</string>
     <string name="menu_sign_out">Sign Out</string>
-    <string name="events_title">There are your events:</string>
+    <string name="events_title">There are your events:(%d)</string>
 </resources>

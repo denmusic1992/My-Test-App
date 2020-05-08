@@ -14,6 +14,8 @@ All rights received.
 interface EventRepository {
     suspend fun add(event: Event)
 
+    suspend fun addAll(events: List<Event>)
+
     suspend fun get(id: Long): Event?
 
     suspend fun getAll(): List<Event>

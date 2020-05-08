@@ -16,6 +16,8 @@ class EventRoomRepositoryImpl(context: Context) : EventRepository {
 
     override suspend fun add(event: Event) = eventDao.insert(EventEntity.fromEvent(event))
 
+    override suspend fun addAll(events: List<Event>) = eventDao.insertAll(events.map { EventEntity.fromEvent(it) })
+
     override suspend fun get(id: Long): Event? = eventDao.getEvent(id)?.toEvent()
 
     override suspend fun getAll(): List<Event> = eventDao.getAllEvents().map { it.toEvent() }
