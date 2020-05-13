@@ -10,4 +10,5 @@ object Config {
     const val alreadyRegistered = "alreadyRegistered"
     const val credentials = "userCredentials"
     const val imageTestUrl = "https://picsum.photos/300"
+    const val postUrl = "https://jsonplaceholder.typicode.com"
 }

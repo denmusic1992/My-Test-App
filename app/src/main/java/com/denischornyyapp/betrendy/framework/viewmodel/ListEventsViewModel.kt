@@ -5,6 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.denischornyyapp.betrendy.framework.database.repository.EventRoomRepositoryImpl
 import com.denischornyyapp.betrendy.framework.database.repository.UserRoomRepositoryImpl
+import com.denischornyyapp.betrendy.framework.di.component.DaggerListEventViewModelComponent
+import com.denischornyyapp.betrendy.framework.di.module.ApplicationModule
 import com.denischornyyapp.betrendy.framework.preferences.PreferencesRepositoryImpl
 import com.denischornyyapp.betrendy.framework.usecases.CredentialUseCases
 import com.denischornyyapp.betrendy.framework.usecases.EventUseCases
@@ -23,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
 Created by Denis Chornyy on 07,Май,2020
@@ -30,16 +33,12 @@ All rights received.
  */
 class ListEventsViewModel(application: Application) : AndroidViewModel(application) {
 
-
-    private val credentialsRepo: CredentialsRepositoryImpl =
-        CredentialsRepositoryImpl(PreferencesRepositoryImpl(application))
-    private val userRepo: UserRepositoryImpl =
-        UserRepositoryImpl(UserRoomRepositoryImpl(application))
-    private val eventRepo: EventRepositoryImpl =
-        EventRepositoryImpl(EventRoomRepositoryImpl(application))
-    private val credentialUseCases: CredentialUseCases
-    private val userUseCases: UserUseCases
-    private val eventUseCases: EventUseCases
+    @Inject
+    lateinit var credentialUseCases: CredentialUseCases
+    @Inject
+    lateinit var userUseCases: UserUseCases
+    @Inject
+    lateinit var eventUseCases: EventUseCases
 
 
     private val job = Job()
@@ -48,31 +47,10 @@ class ListEventsViewModel(application: Application) : AndroidViewModel(applicati
     var events = MutableLiveData<List<Event>>()
 
     init {
-        credentialUseCases = CredentialUseCases(
-            CheckRegistration(credentialsRepo),
-            GetCredentials(credentialsRepo),
-            WriteCredentials(credentialsRepo),
-            DeleteCredentials(credentialsRepo)
-        )
-
-        userUseCases = UserUseCases(
-            AddUser(userRepo),
-            GetUser(userRepo),
-            FindUser(userRepo),
-            UpdateUser(userRepo),
-            DeleteUser(userRepo)
-        )
-
-        eventUseCases = EventUseCases(
-            AddEvent(eventRepo),
-            AddAllEvents(eventRepo),
-            GetEvent(eventRepo),
-            GetAllEvents(eventRepo),
-            GetEventsForAuthor(eventRepo),
-            UpdateEvent(eventRepo),
-            RemoveEvent(eventRepo),
-            RemoveEventsForAuthor(eventRepo)
-        )
+        DaggerListEventViewModelComponent.builder()
+            .applicationModule(ApplicationModule(getApplication()))
+            .build()
+            .inject(this)
     }
 
     /**

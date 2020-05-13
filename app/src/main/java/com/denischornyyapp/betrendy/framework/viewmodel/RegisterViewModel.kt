@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.denischornyyapp.betrendy.framework.database.entities.EventEntity
 import com.denischornyyapp.betrendy.framework.database.repository.EventRoomRepositoryImpl
 import com.denischornyyapp.betrendy.framework.database.repository.UserRoomRepositoryImpl
+import com.denischornyyapp.betrendy.framework.di.component.DaggerRegisterViewModelComponent
+import com.denischornyyapp.betrendy.framework.di.module.ApplicationModule
 import com.denischornyyapp.betrendy.framework.usecases.EventUseCases
 import com.denischornyyapp.betrendy.framework.usecases.UserUseCases
 import com.denischornyyapp.domain_layer.data.Event
@@ -18,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
 Created by Denis Chornyy on 07,Май,2020
@@ -25,34 +28,20 @@ All rights received.
  */
 
 class RegisterViewModel(application: Application) : AndroidViewModel(application) {
-    private val userUseCases: UserUseCases
-    private val eventUseCases: EventUseCases
-    private val userRepo: UserRepositoryImpl = UserRepositoryImpl(UserRoomRepositoryImpl(application))
-    private val eventRepo: EventRepositoryImpl = EventRepositoryImpl(EventRoomRepositoryImpl(application))
+    @Inject
+    lateinit var userUseCases: UserUseCases
+    @Inject
+    lateinit var eventUseCases: EventUseCases
 
     private val job = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
     var isRegistered = MutableLiveData<Boolean>()
 
     init {
-        userUseCases = UserUseCases(
-            AddUser(userRepo),
-            GetUser(userRepo),
-            FindUser(userRepo),
-            UpdateUser(userRepo),
-            DeleteUser(userRepo)
-        )
-
-        eventUseCases = EventUseCases(
-            AddEvent(eventRepo),
-            AddAllEvents(eventRepo),
-            GetEvent(eventRepo),
-            GetAllEvents(eventRepo),
-            GetEventsForAuthor(eventRepo),
-            UpdateEvent(eventRepo),
-            RemoveEvent(eventRepo),
-            RemoveEventsForAuthor(eventRepo)
-        )
+        DaggerRegisterViewModelComponent.builder()
+            .applicationModule(ApplicationModule(getApplication()))
+            .build()
+            .inject(this)
     }
 
     fun registerNewUser(user: User) {

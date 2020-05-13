@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.denischornyyapp.betrendy.framework.database.repository.UserRoomRepositoryImpl
+import com.denischornyyapp.betrendy.framework.di.component.DaggerLoginViewModelComponent
+import com.denischornyyapp.betrendy.framework.di.module.ApplicationModule
 import com.denischornyyapp.betrendy.framework.preferences.PreferencesRepositoryImpl
 import com.denischornyyapp.betrendy.framework.usecases.CredentialUseCases
 import com.denischornyyapp.betrendy.framework.usecases.UserUseCases
@@ -19,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
 Created by Denis Chornyy on 06,Май,2020
@@ -26,34 +29,21 @@ All rights received.
  */
 class LoginViewModel(application: Application): AndroidViewModel(application) {
 
-    // todo: add DI here
-    private val userUseCases: UserUseCases
-    private val credentialUseCases: CredentialUseCases
-    private val userRepo: UserRepositoryImpl = UserRepositoryImpl(UserRoomRepositoryImpl(application))
-    private val credentialsRepo: CredentialsRepositoryImpl = CredentialsRepositoryImpl(
-        PreferencesRepositoryImpl(application)
-    )
+    @Inject
+    lateinit var userUseCases: UserUseCases
+    @Inject
+    lateinit var credentialUseCases: CredentialUseCases
 
     private val job = Job()
     private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
     var loginComplete = MutableLiveData<Boolean>()
     var error = MutableLiveData<Boolean>()
 
-
     init {
-        userUseCases = UserUseCases(
-                AddUser(userRepo),
-                GetUser(userRepo),
-                FindUser(userRepo),
-                UpdateUser(userRepo),
-                DeleteUser(userRepo)
-        )
-        credentialUseCases = CredentialUseCases(
-            CheckRegistration(credentialsRepo),
-            GetCredentials(credentialsRepo),
-            WriteCredentials(credentialsRepo),
-            DeleteCredentials(credentialsRepo)
-        )
+        DaggerLoginViewModelComponent.builder()
+            .applicationModule(ApplicationModule(getApplication()))
+            .build()
+            .inject(this)
     }
 
     fun loginUser(login: String, passwordHash: Int) {
