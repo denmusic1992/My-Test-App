@@ -36,4 +36,9 @@
         android:name="com.denischornyyapp.betrendy.presentation.ui.fragments.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/networkFragment"
+        android:name="com.denischornyyapp.betrendy.presentation.ui.fragments.NetworkFragment"
+        android:label="fragment_network"
+        tools:layout="@layout/fragment_network" />
 </navigation>

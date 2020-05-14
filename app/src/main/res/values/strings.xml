@@ -15,4 +15,9 @@
     <string name="register_me">Register ME!</string>
     <string name="menu_sign_out">Sign Out</string>
     <string name="events_title">There are your events:(%d)</string>
+    <string name="advanced_post_description">Created by userID:%d</string>
+    <string name="there_are_posts_from_server">There are posts from server:(%d)</string>
+
+    <string name="menu_database">Database</string>
+    <string name="network">Network</string>
 </resources>

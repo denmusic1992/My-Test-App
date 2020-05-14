@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.denischornyyapp.betrendy.R
 import com.denischornyyapp.betrendy.databinding.FragmentListEventsBinding
 import com.denischornyyapp.betrendy.framework.helpers.EventClickListener
-import com.denischornyyapp.betrendy.framework.helpers.EventDiffUtil
 import com.denischornyyapp.betrendy.framework.helpers.EventRecyclerViewAdapter
 import com.denischornyyapp.betrendy.framework.utils.PopupUtils
 import com.denischornyyapp.betrendy.framework.viewmodel.ListEventsViewModel
@@ -71,11 +70,11 @@ class ListEventsFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.recyclerViewEvents.adapter = EventRecyclerViewAdapter(listener)
 
-        observeViewModel(listener)
+        observeViewModel()
         viewModel.receiveEvents()
     }
 
-    private fun observeViewModel(listener: EventClickListener) {
+    private fun observeViewModel() {
         viewModel.signout.observe(viewLifecycleOwner, Observer {
             val action = ListEventsFragmentDirections.actionListEventsFragmentToLoginFragment()
             findNavController().navigate(action)

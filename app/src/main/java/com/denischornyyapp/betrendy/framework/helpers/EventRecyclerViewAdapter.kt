@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.denischornyyapp.betrendy.databinding.ItemEventsListBinding
+import com.denischornyyapp.betrendy.framework.utils.GlideUtils
 import com.denischornyyapp.domain_layer.data.Event
 
 /**
@@ -55,6 +56,8 @@ class EventRecyclerViewAdapter(
                 Log.d("Likes", "Likes count = ${event.likesCount}")
                 listener.likeClicked(event)
             }
+
+            GlideUtils.downloadImage(binding.root.context, event.photosUrl[0], binding.imageViewEvent)
         }
     }
 }

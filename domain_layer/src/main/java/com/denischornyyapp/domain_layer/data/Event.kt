@@ -1,5 +1,6 @@
 package com.denischornyyapp.domain_layer.data
 
+import com.denischornyyapp.domain_layer.utils.Config
 import java.util.*
 
 /**
@@ -14,7 +15,7 @@ data class Event(
     val id: Long,
     val title: String,
     val description: String,
-    val photosUrl: List<String> = listOf(),
+    val photosUrl: List<String> = listOf(Config.imageTestUrl, Config.imageTestUrl),
     val publishDate: Long = System.currentTimeMillis(),
     val editDate: Long = publishDate,
     val eventCoordinates: Pair<Double, Double> = Pair(0.0, 0.0),
@@ -39,7 +40,6 @@ data class Event(
             0,
             "Новое событие",
             "Тут очуметь что происходит",
-            listOf(),
             likesCount = (0..9999).random(),
             authorID = authorID
         )
